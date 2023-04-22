@@ -66,4 +66,4 @@ if st.button("Send"):
 
 if st.button("Clear"):
     st.session_state["messages"] = ""
-    
+    show_messages(text)
