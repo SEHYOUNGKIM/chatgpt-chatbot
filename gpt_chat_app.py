@@ -4,7 +4,7 @@ import streamlit as st
 
 def show_messages(text):
     messages_str = [
-        f"{_['role']}: {_['content']}" for _ in st.session_state["messages"][1:]
+        f"{_['role']}: {_['content']}" for _ in st.session_state["messages"][-2:]
     ]
     text.text_area("Messages", value=str("\n".join(messages_str)), height=400)
 
@@ -42,16 +42,17 @@ LTE: 4세대 이동통신(4G) 중 하나로, 고속 대역폭과 전송 속도�
 ]
 
 if "messages" not in st.session_state:
-    st.session_state["messages"] = BASE_PROMPT
+    st.session_state["messages"] = ""
 
 st.header("세형 채팅봇")
 
 text = st.empty()
 show_messages(text)
 
-prompt = st.text_input("Prompt", value="Enter your message here...")
+prompt = st.text_input("Prompt", placeholder="Enter your message here...")
 
 if st.button("Send"):
+    st.session_state["messages"] = BASE_PROMPT
     with st.spinner("Generating response..."):
         st.session_state["messages"] += [{"role": "user", "content": prompt}]
         response = openai.ChatCompletion.create(
@@ -64,5 +65,5 @@ if st.button("Send"):
         show_messages(text)
 
 if st.button("Clear"):
-    st.session_state["messages"] = BASE_PROMPT
+    st.session_state["messages"] = ""
     show_messages(text)
