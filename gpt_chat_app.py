@@ -45,11 +45,12 @@ if "messages" not in st.session_state:
     st.session_state["messages"] = ""
 
 st.header("세형 채팅봇")
+st.subheader('반드시 api 키를 입력하고 엔터를 먼저 눌러주세요.')
 
 text = st.empty()
 show_messages(text)
 
-prompt = st.text_input("Prompt", placeholder="Enter your message here...")
+prompt = st.text_input("Prompt", placeholder="뉴스 기사 및 전문 지식이 포함된 문단을 입력해 주세요.")
 
 if st.button("Send"):
     st.session_state["messages"] = BASE_PROMPT
